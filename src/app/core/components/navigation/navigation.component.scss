@@ -1,0 +1,48 @@
+.main-container {
+  background-color: #f8f8f8;
+}
+
+::ng-deep .mat-mdc-raised-button>.mat-icon {
+  color: white !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.toolbar-container {
+  background-color: var(--primary-color);
+  transition: 0.5s;
+  margin: 0 auto;
+  padding: 2% 8%;
+  height: 12vh;
+}
+
+.menu-items-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+hr {
+  opacity: 0.6;
+  background-color: white;
+}
+
+.pokemon-icon {
+  width: 46px;
+}
+
+.navigation-item {
+  color: white !important;
+  font-size: 21px;
+}
+
+.navigation-item-container {
+  display: flex;
+  align-self: center;
+  gap: 16px;
+}
+
+@media (max-width: 992px) {
+  .toolbar-container {
+    height: auto;
+  }
+}

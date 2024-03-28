@@ -1,0 +1,56 @@
+@defer {
+  <div class="main-container">
+    <div class="main-block">
+        <div class="filter-block">
+          <input matInput placeholder="Digite o nome do Pokemon" [formControl]="pokemonFilter">
+          <button mat-raised-button [disabled]="!pokemonFilter.valid" (click)="filterPokemons()" color="primary">Filtrar</button>
+          @if(isFiltering) {
+            <button mat-raised-button (click)="restoreFavorites()">Limpar</button>
+          }
+          <button mat-raised-button color="warn" (click)="back()"><mat-icon>keyboard_arrow_left</mat-icon>Voltar</button>
+        </div>
+        <div>
+          @if(displayedFavorites.length > 0) {
+            <div class="favorites-length">
+              <span>Total de favoritos: {{ displayedFavorites.length }}</span>
+            </div>
+          }
+        </div>
+    </div>
+    <div [ngClass]="displayedFavorites.length ? 'card-container-favorites' : 'card-container-no-length'">
+        @if(displayedFavorites.length === 0) {
+            <div class="card-content-position flex-card">
+              <div class="header-container">
+                <span class="card-text">Nenhum pokémon favorito!</span>
+              </div>
+              <div>
+                <img class="pokemon-img" src="../../../../../assets/images/pikachu (2).png" />
+              </div>
+            </div>
+        } @else {
+            @for (pokemon of displayedFavorites; track pokemon) {
+            <div class="card">
+              <div class="card-content-position">
+                <div class="header-container">
+                  <span class="card-text">{{ pokemon.name }} </span>
+                  <div class="icon-container">
+                    <mat-icon
+                      [ngStyle]="{ color: isFavorite(pokemon.id) ? 'red' : 'grey' }"
+                      (click)="setFavorite(pokemon)"
+                      >favorite</mat-icon
+                    >
+                    <mat-icon class="info-icon" (click)="getPokemonInfo(pokemon.id)"
+                      >info</mat-icon
+                    >
+                  </div>
+                </div>
+                <div>
+                  <img class="pokemon-img" [src]="pokemon.sprites.front_default" />
+                </div>
+              </div>
+            </div>
+            }
+        }
+    </div>
+  </div>
+}

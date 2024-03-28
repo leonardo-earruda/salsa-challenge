@@ -1,0 +1,57 @@
+.main-container {
+  min-height: 85.5vh;
+}
+
+.filter-block {
+  display: flex;
+  padding: 2% 8% 0 8%;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, ::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke: white !important;
+}
+
+.load-btn {
+  width: 10rem;
+}
+
+.d-flex {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 992px) {
+
+  .d-flex {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .filter-block {
+    flex-direction: column;
+    padding-top: 4%;
+  }
+
+  .filter-block input {
+    width: 100%;
+  }
+
+  .card-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .load-btn {
+    align-self: center;
+  }
+
+
+}

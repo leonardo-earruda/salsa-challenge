@@ -1,0 +1,259 @@
+
+
+* {
+    color: #6d6d6d;
+    line-height: 2rem;
+}
+
+.back-block {
+    padding: 2% 8%;
+}
+
+.btn-back {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.pokemon-name {
+    justify-self: center;
+}
+
+.detail-container {
+    display: flex;
+    gap: 2rem;
+    padding:  2% 8%;
+    max-width: 100dvw;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.detail-title {
+    font-size: 2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #6d6d6d;
+    display: flex;
+}
+
+.detail-subtitle {
+    color: #6d6d6d;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.detail-table-value {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.detail-table {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.pokemon-img {
+    height: 30vw;
+    width: 30vw;
+}
+
+.main-details {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.side-stats {
+    width: 30%;
+    perspective: 1000px;
+    transition: 0.5s;
+}
+
+.no-pointer {
+    cursor: default !important;
+}
+
+.side-stats-right {
+    width: 30%;
+    perspective: 1000px;
+}
+
+.second-stats {
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.second-stats-right {
+    transition: transform 0.5s; 
+    transform-style: preserve-3d; 
+    transform: rotateY(-30deg);
+    order: 2;
+}
+
+.second-stats-left {
+    order: 1;
+    transition: transform 0.5s; 
+    transform-style: preserve-3d; 
+    transform: rotateY(30deg); 
+}
+
+.pokemon-img-container {
+    order: 0;
+}
+
+
+
+.side-stats:hover .second-stats, .side-stats-right:hover .second-stats-right{
+    transform: rotateY(0deg);
+
+}
+
+::ng-deep .mdc-linear-progress__buffer, mat-progress-bar, ::ng-deep .mdc-linear-progress__bar-inner {
+    height: 1rem !important;
+    border-radius: 10px !important;
+    transition: 0.5s;
+}
+
+::ng-deep .mdc-linear-progress__bar-inner {
+    border: 0px !important;
+    height: 100% !important;
+    background-color: var(--primary-color) !important;   
+}
+
+
+::ng-deep .mdc-linear-progress__bar {
+    height: 100% !important;
+    margin: 0 !important;
+}
+
+::ng-deep .mat-icon {
+    display: flex !important;
+    align-items: center !important;
+  }
+
+
+.d-flex {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ability-name {
+    color: white;
+}
+
+.badge-type {
+    padding: 0.5rem;
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.5s;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.pokemon-img-evolution {
+    height: 10vw;
+    width: 10vw;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.line {
+    opacity: 0.5;
+    margin: 3rem 0 2rem 0;
+    width: 100%;
+}
+
+.none {
+    display: none;
+}
+
+@media (max-width: 992px) {
+
+    .detail-container {
+        padding: 2rem 2rem 2rem 2rem;
+    }
+
+    .pokemon-img-container {
+        order: -1
+    };
+
+    .side-stats {
+        width: 100%;
+    }
+
+    .side-stats-right {
+        width: 100%;
+    }
+
+    .second-stats {
+        gap: 1rem;
+    }
+
+    .second-stats-right {
+        transform: rotateY(0deg);
+    }
+
+    .second-stats-left {
+        transform: rotateY(0deg);
+    }
+
+    .main-details {
+        flex-direction: column;
+    }
+
+    .pokemon-img {
+        height: 80vw;
+        width: 80vw;
+    }
+
+    .pokemon-img-evolution {
+        height: 50vw;
+        width: 50vw;
+    }
+
+    .detail-title {
+        font-size: 1.5rem;
+    }
+
+    .detail-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .evolution-container {
+        flex-direction: column;
+    }
+
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
+
+    .none {
+        display: block;
+    }
+
+    .btn-back {
+        justify-content: center;
+    }
+
+    .detail-subtitle {
+        flex-direction: column;
+        width: 50%;
+    }
+}

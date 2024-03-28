@@ -1,0 +1,83 @@
+@defer () {
+    <div class="detail-container">
+        <div class="btn-back">
+            <button mat-raised-button color="warn" (click)="back()"><mat-icon>keyboard_arrow_left</mat-icon>Voltar</button>
+        </div>
+        <div class="detail-title">
+            <div class="pokemon-name">
+                {{ pokemon.name }}
+            </div>
+        </div>    
+        <div class="detail-subtitle">
+            @for(type of pokemon.types; track type) {
+                    <div class="badge-type" (click)="changeColors(type.type.name)"  [ngClass]="'type-' + type.type.name">{{ type.type.name }}</div>
+            }
+        </div>
+        <div class="main-details">
+            <div class="side-stats">
+                <div class="second-stats second-stats-left">
+                    @for(stats of pokemon.stats; track stats) {
+                        <div class="progress">
+                            <label>{{ stats.stat.name.toUpperCase() }}</label>
+                            <mat-progress-bar mode="determinate" class="style1" [value]="stats.base_stat"></mat-progress-bar>
+                            {{ stats.base_stat }}
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <div class="pokemon-img-container">
+                @defer {
+                    <img class="pokemon-img" [src]="pokemon?.sprites?.front_default" />
+                }
+            </div>
+            <hr class="line none">
+            <div class="side-stats-right">
+                <div class="second-stats second-stats-right">
+                    <div class="d-flex">
+                        <span class="detail-table">ID:</span><span class="detail-table-value">#{{ pokemon.id }}</span><br>
+                    </div>
+                    <div class="d-flex flex-wrap">
+                        <span class="detail-table">Habilidades:</span>
+                        @for(ability of pokemon.abilities; track ability) {
+                                <div class="badge-type no-pointer" [ngClass]="'type-' + (clickedColor ? clickedColor : pokemon.types[0].type.name)">
+                                    <span class="ability-name">{{ ability.ability.name | titlecase }}</span>
+                                </div>                          
+                        }
+                    </div>
+                    <div class="d-flex">
+                        <span class="detail-table">Altura:</span><span class="detail-table-value">{{ (pokemon.height / 10).toString().replace('.', ',') }}m</span><br>
+                    </div>
+                    <div class="d-flex">
+                        <span class="detail-table">Peso:</span><span class="detail-table-value">{{ (pokemon.weight / 10).toString().replace('.', ',') }}kg</span><br>
+                    </div>
+                    <div class="d-flex">
+                        <span class="detail-table">Experiência base:</span><span class="detail-table-value">{{ pokemon.base_experience }}</span><br>
+                    </div> 
+    
+                </div>
+    
+        </div>
+    </div>
+    <hr class="line">
+    <div class="d-flex flex-column">
+        <span class="detail-table">Evoluções:</span>
+        <div class="d-flex evolution-container">
+            @for(evolution of urlsAndNames; track evolution; let first = $first; let last = $last) {
+                <div class="d-flex evolution-container">
+                        @if(!first && evolution.minLevel) {
+                        Lvl. {{ evolution.minLevel }}
+                        }
+                        <div class="d-flex flex-column">
+                            <img class="pokemon-img-evolution" [src]="evolution.image" />
+                            <span class="detail-table-value"><strong>{{ evolution.pokemonName | titlecase }}</strong></span>
+                        </div>
+                        @if(!last) {
+                            <mat-icon>arrow_forward</mat-icon>
+                        }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+}

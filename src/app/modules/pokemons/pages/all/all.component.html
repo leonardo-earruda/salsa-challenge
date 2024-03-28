@@ -1,0 +1,52 @@
+@defer {
+  <div class="main-container">
+    <div class="filter-block">
+      <div class="d-flex">
+        <input matInput [formControl]="pokemonFilter" placeholder="Digite o nome do Pokemon">
+        <button mat-raised-button [disabled]="!pokemonFilter.valid" (click)="filterPokemons()" color="primary">Filtrar</button>
+        @if(isFiltering) {
+          <button mat-raised-button (click)="getFetchedPokemons()">Limpar</button>
+        }
+      </div>
+      @if(!isFiltering) {
+        @defer {
+          <span>Mostrando {{ pokemons?.length }} de {{ totalItems }}</span>
+        }
+      }
+    </div>
+    <div class="card-container">
+      @for (pokemon of pokemons; track pokemon) {
+      <div class="card">
+        <div class="card-content-position">
+          <div class="header-container">
+            <span class="card-text">{{ pokemon.name }} </span>
+            <div class="icon-container">
+              <mat-icon
+                [ngStyle]="{ color: isFavorite(pokemon.id) ? 'red' : 'grey' }"
+                (click)="setFavorite(pokemon)"
+                >favorite</mat-icon
+              >
+              <mat-icon class="info-icon" (click)="getPokemonInfo(pokemon.id)"
+                >info</mat-icon
+              >
+            </div>
+          </div>
+          <div>
+            <img class="pokemon-img" [src]="pokemon.sprites.front_default" />
+          </div>
+        </div>
+      </div>
+      }
+      @if(!isFiltering) {
+        <button mat-raised-button class="load-btn" color="primary" (click)="loadMore()">
+          <span></span>
+          @if(!isFetching) {
+            Carregar mais
+          } @else {
+          <mat-spinner [diameter]="25"></mat-spinner>
+          }
+        </button>
+      }
+    </div>
+  </div>
+}

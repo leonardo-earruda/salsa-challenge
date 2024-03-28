@@ -1,0 +1,20 @@
+<div class="main-container">
+  <div class="toolbar-container">
+    <div class="menu-items-container">
+      <img class="pokemon-icon" src="../../../../assets/pokemon-icon.svg" />
+      <div class="navigation-item-container">
+        <button
+          class="navigation-item"
+          mat-button
+          [routerLink]="['/pokemons/all']"
+        >
+          Pokemons
+        </button>
+        <button [routerLink]="['/pokemons/favorites']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
+         class="navigation-item" mat-button>Favoritos</button>
+      </div>
+    </div>
+    <hr />
+  </div>
+  <router-outlet></router-outlet>
+</div>
