@@ -26,12 +26,9 @@ import { Pokemon } from '../../../../shared/utils/pokemon.model';
 export class FavoritesComponent {
   private favorites: Pokemon[] =
     JSON.parse(localStorage.getItem('favorites')!) ?? [];
-  protected displayedFavorites: Pokemon[] = this.favorites;
+  displayedFavorites: Pokemon[] = this.favorites;
   protected isFiltering: boolean = false;
-  protected pokemonFilter: FormControl = new FormControl(
-    '',
-    Validators.required
-  );
+  pokemonFilter: FormControl = new FormControl('', Validators.required);
 
   constructor(private router: Router, private location: Location) {}
 
@@ -57,7 +54,7 @@ export class FavoritesComponent {
     localStorage.setItem('favorites', JSON.stringify(this.favorites));
   }
 
-  protected filterPokemons(): void {
+  filterPokemons(): void {
     const favorites: Pokemon[] = JSON.parse(
       localStorage.getItem('favorites') || '[]'
     );

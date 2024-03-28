@@ -29,7 +29,7 @@ import { PokemonsService } from '../../services/pokemons.service';
 })
 export class DetailsComponent implements OnInit, OnDestroy {
   private pokemonId: number;
-  public pokemon: Pokemon = {} as Pokemon;
+  public pokemon: any;
   protected evolutions: string = '';
   urlsAndNames: Evolutions[] = [];
   styleElement: HTMLStyleElement;
@@ -111,11 +111,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getColor(clickedColor?: string): string {
+  getColor(clickedColor?: string): string {
     let color = null;
     if (clickedColor) {
       color = this.pokemon.types.find(
-        (type) =>
+        (type: any) =>
           type.type.name.toLocaleLowerCase() ===
           clickedColor.toLocaleLowerCase()
       )?.type.name;

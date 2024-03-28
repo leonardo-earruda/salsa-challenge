@@ -125,7 +125,7 @@ export class AllComponent implements OnInit {
       });
   }
 
-  public setFavorite(pokemon: Pokemon): void {
+  public setFavorite(pokemon: any): void {
     const favorites: Pokemon[] = JSON.parse(
       localStorage.getItem('favorites') || '[]'
     );
