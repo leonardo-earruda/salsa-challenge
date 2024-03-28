@@ -1,41 +1,58 @@
 import { AsyncPipe, NgIf, NgStyle } from '@angular/common';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { catchError, finalize, forkJoin, map, of, switchMap, tap } from 'rxjs';
+import {
+  NamedAPIResource,
+  NamedAPIResourceList,
+  Pokemon,
+} from '../../../../shared/utils/pokemon.model';
+import { FilterService } from '../../services/filter.service';
 import { PokemonsService } from '../../services/pokemons.service';
 import { SnackbarService } from '../../services/snackbar.service';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FilterService } from '../../services/filter.service';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { NamedAPIResource, NamedAPIResourceList, Pokemon } from '../../../../shared/utils/pokemon.model';
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-
 
 @Component({
   selector: 'app-all',
   standalone: true,
-  imports: [AsyncPipe, MatIconModule, MatButtonModule, NgStyle, MatButtonModule, ReactiveFormsModule, MatButtonModule, NgIf, MatProgressSpinnerModule, MatInputModule],
+  imports: [
+    AsyncPipe,
+    MatIconModule,
+    MatButtonModule,
+    NgStyle,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    NgIf,
+    MatProgressSpinnerModule,
+    MatInputModule,
+  ],
   templateUrl: './all.component.html',
   styleUrl: './all.component.scss',
 })
 export class AllComponent implements OnInit {
   pokemons!: Pokemon[];
-  private nextPage: string ='';
-  protected pokemonFilter: FormControl = new FormControl('', [Validators.required]);
+  private nextPage: string = '';
+  protected pokemonFilter: FormControl = new FormControl('', [
+    Validators.required,
+  ]);
   protected isFetching: boolean = false;
   protected isFiltering: boolean = false;
-  protected totalItems: number = JSON.parse(localStorage.getItem('totalItems') || '0');
-  
+  protected totalItems: number = JSON.parse(
+    localStorage.getItem('totalItems') || '0'
+  );
+
   constructor(
     private pokemonsService: PokemonsService,
     private router: Router,
     private snackbarService: SnackbarService,
-    private filterService: FilterService,
-  ) { }
+    private filterService: FilterService
+  ) {}
 
   ngOnInit(): void {
     this.getFetchedPokemons();
@@ -48,15 +65,17 @@ export class AllComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.filterService.setFetchedPokemons([]);
-          this.nextPage = JSON.parse(localStorage.getItem('nextPage') || 'null');
+          this.nextPage = JSON.parse(
+            localStorage.getItem('nextPage') || 'null'
+          );
           localStorage.removeItem('nextPage');
-        }) 
+        })
       )
       .subscribe((pokemons: Pokemon[]) => {
-        if(!pokemons.length) {
-          this.getAllByPage()
+        if (!pokemons.length) {
+          this.getAllByPage();
           return;
-        };
+        }
         this.pokemons = pokemons;
       });
   }
@@ -65,7 +84,7 @@ export class AllComponent implements OnInit {
     this.pokemonsService
       .getByPage()
       .pipe(
-        switchMap(({count, next, results}: NamedAPIResourceList) => {
+        switchMap(({ count, next, results }: NamedAPIResourceList) => {
           this.totalItems = count;
           localStorage.setItem('totalItems', count.toString());
           this.nextPage = next;
@@ -81,14 +100,15 @@ export class AllComponent implements OnInit {
         const pokemons = response as Pokemon[];
         this.pokemons = pokemons;
       });
-  };
+  }
 
   protected loadMore(): void {
-    this.pokemonsService.getByUrl(this.nextPage)
+    this.pokemonsService
+      .getByUrl(this.nextPage)
       .pipe(
-        tap(() => this.isFetching = true),
+        tap(() => (this.isFetching = true)),
         map((res) => res as NamedAPIResourceList),
-        switchMap(({ count, next, results }) => {
+        switchMap(({ next, results }) => {
           this.nextPage = next;
           localStorage.setItem('nextPage', next);
           const pokemonUrls = results.map(
@@ -98,7 +118,8 @@ export class AllComponent implements OnInit {
             pokemonUrls.map((url: string) => this.pokemonsService.getByUrl(url))
           );
         })
-      ).subscribe((pokemons: Pokemon[] | any) => {
+      )
+      .subscribe((pokemons: Pokemon[] | any) => {
         this.isFetching = false;
         this.pokemons = this.pokemons.concat(pokemons);
       });
@@ -109,14 +130,24 @@ export class AllComponent implements OnInit {
       localStorage.getItem('favorites') || '[]'
     );
     const id = pokemon.id;
-    const pokemonIndex = favorites.findIndex(pokemon => pokemon.id === id);
+    const pokemonIndex = favorites.findIndex((pokemon) => pokemon.id === id);
     if (pokemonIndex === -1) {
       favorites.push(pokemon);
-      this.snackbarService.openSnackBar(`${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)} favoritado`, 'Fechar');
+      this.snackbarService.openSnackBar(
+        `${
+          pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+        } favoritado`,
+        'Fechar'
+      );
       localStorage.setItem('favorites', JSON.stringify(favorites));
     } else {
       favorites.splice(pokemonIndex, 1);
-      this.snackbarService.openSnackBar(`${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)} desfavoritado`, 'Fechar');
+      this.snackbarService.openSnackBar(
+        `${
+          pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+        } desfavoritado`,
+        'Fechar'
+      );
       localStorage.setItem('favorites', JSON.stringify(favorites));
     }
   }
@@ -129,11 +160,12 @@ export class AllComponent implements OnInit {
     const favorites: Pokemon[] = JSON.parse(
       localStorage.getItem('favorites') || '[]'
     );
-    return !!favorites.find(pokemon => pokemon.id === id);
-  };
+    return !!favorites.find((pokemon) => pokemon.id === id);
+  }
 
   public filterPokemons() {
-    this.pokemonsService.getPokemonFiltered(this.pokemonFilter.value.toLowerCase())
+    this.pokemonsService
+      .getPokemonFiltered(this.pokemonFilter.value.toLowerCase())
       .pipe(
         catchError((err: HttpErrorResponse) => {
           this.snackbarService.openSnackBar('Pokemon não encontrado', 'Fechar');
@@ -141,10 +173,10 @@ export class AllComponent implements OnInit {
         })
       )
       .subscribe((response: any) => {
-        if(response.status === 404) return;
+        if (response.status === 404) return;
         this.isFiltering = true;
         this.filterService.setFetchedPokemons(this.pokemons);
         this.pokemons = [response];
       });
-  };
+  }
 }

@@ -11,7 +11,10 @@
   flex-direction: column;
 }
 
-::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, ::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,
+::ng-deep
+  .mat-mdc-progress-spinner
+  .mdc-circular-progress__indeterminate-circle-graphic {
   stroke: white !important;
 }
 
@@ -25,7 +28,6 @@
 }
 
 @media (max-width: 992px) {
-
   .d-flex {
     flex-direction: column;
     width: 100%;
@@ -52,6 +54,4 @@
   .load-btn {
     align-self: center;
   }
-
-
 }
