@@ -5,7 +5,7 @@
    
 3. Run npm install.
 
-4. Run the development server on port 4200. It's important that the project is running on port 4200 due to Cypress configs.
+4. Run the development server on port 4200.
 
 5. Navigate to `http://localhost:4200/`.
 
