@@ -3,7 +3,7 @@
 
         git clone https://github.com/leonardo-earruda/salsa-challenge.git
    
-3. Run npm-install.
+3. Run npm install.
 
 4. Run the development server on port 4200. It's important that the project is running on port 4200 due to Cypress configs.
 
